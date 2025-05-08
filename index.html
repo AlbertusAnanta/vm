@@ -452,8 +452,8 @@
         <ul class="navbar-links">
             <li><a href="index.html">HOME</a></li>
             <li><a href="model.html">models</a></li>
-            <li><a href="gallery.html">Contacts</a></li>
-            <li><a href="timeline.html">Order</a></li>
+            <li><a href="contact.html">Contacts</a></li>
+            <li><a href="order.html">Order</a></li>
         </ul>
     </nav>
     
@@ -607,6 +607,20 @@
                 nav.classList.add('scrolled');
             } else {
                 nav.classList.remove('scrolled');
+            }
+        });
+        
+        // Close navbar when clicking links
+        document.querySelectorAll('.navbar-links a').forEach(link => {
+            link.addEventListener('click', () => navbarLinks.classList.remove('active'));
+        });
+
+        // Close navbar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navbarLinks.classList.contains('active') && 
+                !e.target.closest('.navbar-links') && 
+                !e.target.closest('.navbar-toggle')) {
+                navbarLinks.classList.remove('active');
             }
         });
         document.addEventListener("DOMContentLoaded", () => {
