@@ -330,6 +330,117 @@
             }
 
         }
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 100px auto;
+        }
+        .container {
+            padding: 10px 50px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.5s ease;
+        }
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .text-box {
+            padding: 20px 30px;
+            position: relative;
+            background-color: #fff;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .left-container {
+            left: 0;
+        }
+        .right-container {
+            left: 50%;
+        }
+        .container img {
+            position: absolute;
+            width: 40px;
+            border-radius: 50%;
+            right: -20px;
+            top: 32px;
+            z-index: 10;
+        }
+        .right-container img {
+            left: -20px;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 100%;
+            background: #fff;
+            top: 0;
+            left: 50%;
+            margin-left: -3px;
+            z-index: -1;
+        }
+        .text-box h2 {
+            font-weight: 600;
+        }
+        .text-box small {
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .left-container-arrow {
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 28px;
+            z-index: -1;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid white;
+            right: -15px;
+        }
+        .right-container-arrow {
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 28px;
+            z-index: -1;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid white;
+            left: -15px;
+        }
+        @media screen and (max-width: 600px){
+            .timeline{
+                margin: 50px auto;
+            }
+            .timeline::after{
+                left: 31px;
+            }
+            .container{
+                width: 100%;
+                padding-left: 80px;
+                padding-right: 25px;
+            }
+            .text-box{
+                font-size: 13px;
+            }
+            .text-box small{
+                margin-bottom: 10px;
+            }
+            .right-container{
+                left: 0;
+            }
+            .left-container img, .right-container img{
+                left: 10px;
+            }
+            .left-container-arrow, .right-container-arrow{
+                border-right: 15px solid white;
+                border-left: 0;
+                left: -15px;
+            }
+        }
     </style>
 </head>
 <body id="body">
@@ -354,6 +465,116 @@
             <a href="model.html" class="btn">Discover Our Models</a>
         </div>
     </header>
+    <div class="timeline">
+        <div class="container left-container">
+            <img src="google.png" alt="">
+            <div class="text-box">
+                <h2>Google</h2>
+                <small>2018-2019</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="left-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container right-container">
+            <img src="amazon.png" alt="">
+            <div class="text-box">
+                <h2>Amazon</h2>
+                <small>2019-2020</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="right-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container left-container">
+            <img src="tesla.png" alt="">
+            <div class="text-box">
+                <h2>Tesla</h2>
+                <small>2020-2021</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="left-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container right-container">
+            <img src="toyota.png" alt="">
+            <div class="text-box">
+                <h2>Toyota</h2>
+                <small>2021-2022</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="right-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container left-container">
+            <img src="google.png" alt="">
+            <div class="text-box">
+                <h2>Google</h2>
+                <small>2018-2019</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="left-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container right-container">
+            <img src="amazon.png" alt="">
+            <div class="text-box">
+                <h2>Amazon</h2>
+                <small>2019-2020</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="right-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container left-container">
+            <img src="tesla.png" alt="">
+            <div class="text-box">
+                <h2>Tesla</h2>
+                <small>2020-2021</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="left-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container right-container">
+            <img src="toyota.png" alt="">
+            <div class="text-box">
+                <h2>Toyota</h2>
+                <small>2021-2022</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="right-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container left-container">
+            <img src="google.png" alt="">
+            <div class="text-box">
+                <h2>Google</h2>
+                <small>2018-2019</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="left-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container right-container">
+            <img src="amazon.png" alt="">
+            <div class="text-box">
+                <h2>Amazon</h2>
+                <small>2019-2020</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="right-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container left-container">
+            <img src="tesla.png" alt="">
+            <div class="text-box">
+                <h2>Tesla</h2>
+                <small>2020-2021</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="left-container-arrow"></span>
+            </div>
+        </div>
+        <div class="container right-container">
+            <img src="toyota.png" alt="">
+            <div class="text-box">
+                <h2>Toyota</h2>
+                <small>2021-2022</small>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae dolores impedit et, veniam unde quia blanditiis.</p>
+                <span class="right-container-arrow"></span>
+            </div>
+        </div>
+    </div>
     <footer class="footer">
         <div class="footer-col">
             <h4>Our Media</h4>
@@ -387,6 +608,34 @@
             } else {
                 nav.classList.remove('scrolled');
             }
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+            const containers = document.querySelectorAll('.container');
+    
+            // Observer options with a small threshold
+            const observerOptions = {
+                root: null, // Use the viewport as the root
+                rootMargin: '0px',
+                threshold: 0.05 // Trigger when only 5% of the element is visible
+            };
+    
+            const observerCallback = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add the 'visible' class when the element comes into view
+                        entry.target.classList.add('visible');
+                    } else {
+                        // Remove the 'visible' class when the element goes out of view
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            };
+    
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+    
+            containers.forEach(container => {
+                observer.observe(container);
+            });
         });
     </script>
 </body>
