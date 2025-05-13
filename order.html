@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VM | Order</title>
+    <link rel="shortcut icon" href="logo-nt.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #333;
+            --accent-color: #c8a97e;
+            --text-light: #ffffff;
+            --text-dark: #24262b;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --shadow-large: 0 4px 20px rgba(255, 255, 255, 0.2);
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Montserrat', sans-serif;
+            --nav-font: 'Raleway', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body::-webkit-scrollbar {
+        display: none;
+        }
+        body {
+            font-family: var(--body-font);
+            overflow-x: hidden;
+            line-height: 1.6;
+            letter-spacing: 0.02rem;
+            background-color: black;
+            color: var(--text-light);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: var(--shadow-normal);
+            font-family: var(--nav-font);
+            letter-spacing: 0.15rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        nav.scrolled {
+            height: 70px;
+            background-color: rgba(17, 17, 17, 0.95);
+        }
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            font-family: var(--nav-font);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 0.25rem;
+        }
+
+        .navbar-logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .navbar-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-links li {
+            margin: 0 15px;
+        }
+
+        .navbar-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color var(--transition-normal);
+            display: block;
+        }
+
+        .navbar-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .navbar-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Header */
+        #main-header {
+            width: 100%;
+            height: 60vh;
+            background: url('banner3.png') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+            position: relative;
+            user-select: none;
+            background-attachment: fixed;
+        }
+
+        #main-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin: 0 0 1rem;
+            font-weight: bold;
+            font-family: var(--heading-font);
+            letter-spacing: 0.4rem;
+        }
+
+        .header-content p {
+            font-size: 1.25rem;
+            margin: 0;
+            font-family: var(--nav-font);
+            letter-spacing: 0.25rem;
+        }
+
+        /* Order Form Styles */
+        .order-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .order-title {
+            font-family: var(--heading-font);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 0.2rem;
+            position: relative;
+        }
+
+        .order-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .order-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 15px;
+        }
+
+        .form-section.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: var(--nav-font);
+            letter-spacing: 0.1rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(200, 169, 126, 0.4);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-family: var(--body-font);
+            transition: all var(--transition-normal);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(200, 169, 126, 0.2);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(200, 169, 126, 0.4);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-family: var(--body-font);
+            transition: all var(--transition-normal);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(200, 169, 126, 0.4);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-family: var(--body-font);
+            min-height: 120px;
+            resize: vertical;
+            transition: all var(--transition-normal);
+        }
+
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform var(--transition-normal);
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-shadow: 0 0 2px black;
+        }
+
+        .submit-btn {
+            grid-column: span 2;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            border: none;
+            padding: 15px 30px;
+            font-family: var(--nav-font);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #d8b88e;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-normal);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-checkbox {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--accent-color);
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-checkbox:checked {
+            background-color: var(--accent-color);
+        }
+
+        .feature-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-dark);
+            font-size: 12px;
+        }
+
+        .feature-label {
+            cursor: pointer;
+        }
+
+        .footer {
+            background-color: black;
+            padding: 40px 0;
+            text-align: center;
+            filter: blur(50%);
+        }
+        .footer-col h4 {
+            font-size: 20px;
+            color: #ffffff;
+            text-transform: capitalize;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        .footer-col h4::after {
+            content: '';
+            background-color: var(--accent-color);
+            height: 2px;
+            width: 50px;
+            display: block;
+            margin: 15px auto 20px;
+        }
+        .footer-col .social-links a {
+            display: inline-block;
+            height: 45px;
+            width: 45px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 0 10px 10px 0;
+            text-align: center;
+            line-height: 45px;
+            border-radius: 50%;
+            color: #ffffff;
+            transition: all 0.5s ease;
+        }
+        .footer-col .social-links a:hover {
+            color: #24262b;
+            background-color: #ffffff;
+            transform: scale(1.2);
+        }
+        .copyright {
+            font-size: 0.85rem;
+            color: #888888;
+            text-align: center;
+        }
+        .accent{
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-color);
+                display: none;
+                padding: 0;
+                margin: 0;
+                z-index: 1000;
+                box-shadow: var(--shadow-normal);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid #444;
+            }
+
+            .navbar-links li a {
+                display: block;
+                padding: 15px;
+                text-align: center;
+            }
+
+            .navbar-toggle {
+                display: block;
+            }
+
+            .navbar-logo {
+                font-size: 1.2rem;
+            }
+
+            .navbar-logo img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .header-content p {
+                font-size: 1rem;
+            }
+
+            .order-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-section.full-width,
+            .submit-btn {
+                grid-column: 1;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-content h1 {
+                font-size: 1.7rem;
+            }
+
+            #main-header {
+                height: 40vh;
+            }
+
+            .footer-col .social-links a {
+                height: 35px;
+                width: 35px;
+                line-height: 35px;
+                margin: 0 5px 5px 0;
+            }
+            .footer { padding: 30px 0; }
+            .footer-col h4 {
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+            .order-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="main-nav">
+        <a href="index.html" class="navbar-logo">
+            <img src="logo.png" alt="Verstappen Motors Logo"><p>Verstappen</p>
+        </a>
+        <button class="navbar-toggle" aria-label="Toggle Navigation Menu">&#9776;</button>
+        <ul class="navbar-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="model.html">models</a></li>
+            <li><a href="contact.html">Contacts</a></li>
+            <li><a href="order.html">Order</a></li>
+        </ul>
+    </nav>
+    
+    <header id="main-header">
+        <div class="header-content">
+            <h1>Order Your Dream Car</h1>
+            <p class="accent">Precision Engineering At Your Command</p>
+        </div>
+    </header>
+
+    <div class="order-container">
+        <h2 class="order-title">Customize Your Verstappen</h2>
+        
+        <form class="order-form" id="orderForm">
+            <div class="form-section">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" id="fullName" name="fullName" class="form-input" required>
+            </div>
+            
+            <div class="form-section">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+            
+            <div class="form-section">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="form-input" required>
+            </div>
+            
+            <div class="form-section">
+                <label for="address" class="form-label">Delivery Address</label>
+                <input type="text" id="address" name="address" class="form-input" required>
+            </div>
+            
+            <div class="form-section">
+                <label for="model" class="form-label">Select Model</label>
+                <select id="model" name="model" class="form-select" required>
+                    <option value="">-- Select a Model --</option>
+                    <option value="aet">Verstappen Aethereon</option>
+                    <option value="gra">Verstappen Gravion</option>
+                    <option value="hel">Verstappen Helix GT</option>
+                    <option value="obs">Verstappen Obsidian RS</option>
+                    <option value="xen">Verstappen Xenonance</option>
+                    <option value="zep">Verstappen Zephyros</option>
+                    <option value="opp">Verstappen Oppressor</option>
+                    <option value="zen">Verstappen Zentorno</option>
+                </select>
+            </div>
+            
+            <div class="form-section">
+                <label class="form-label">Exterior Color</label>
+                <input type="hidden" id="exteriorColor" name="exteriorColor" value="">
+                <div class="color-options" id="exteriorColorOptions">
+                    <div class="color-option" style="background-color: #000000;" data-color="Obsidian Black" onclick="selectColor('exteriorColor', 'Obsidian Black', this)"></div>
+                    <div class="color-option" style="background-color: #FFFFFF;" data-color="Alpine White" onclick="selectColor('exteriorColor', 'Alpine White', this)"></div>
+                    <div class="color-option" style="background-color: #C0C0C0;" data-color="Silver Arrow" onclick="selectColor('exteriorColor', 'Silver Arrow', this)"></div>
+                    <div class="color-option" style="background-color: #0F52BA;" data-color="Racing Blue" onclick="selectColor('exteriorColor', 'Racing Blue', this)"></div>
+                    <div class="color-option" style="background-color: #8B0000;" data-color="Ruby Red" onclick="selectColor('exteriorColor', 'Ruby Red', this)"></div>
+                    <div class="color-option" style="background-color: #355E3B;" data-color="British Racing Green" onclick="selectColor('exteriorColor', 'British Racing Green', this)"></div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <label class="form-label">Interior Trim</label>
+                <input type="hidden" id="interiorTrim" name="interiorTrim" value="">
+                <div class="color-options" id="interiorTrimOptions">
+                    <div class="color-option" style="background-color: #000000;" data-color="Black Leather" onclick="selectColor('interiorTrim', 'Black Leather', this)"></div>
+                    <div class="color-option" style="background-color: #8B4513;" data-color="Brown Leather" onclick="selectColor('interiorTrim', 'Brown Leather', this)"></div>
+                    <div class="color-option" style="background-color: #F5F5DC;" data-color="Beige Leather" onclick="selectColor('interiorTrim', 'Beige Leather', this)"></div>
+                    <div class="color-option" style="background-color: #A9A9A9;" data-color="Gray Leather" onclick="selectColor('interiorTrim', 'Gray Leather', this)"></div>
+                </div>
+            </div>
+            
+            <div class="form-section full-width">
+                <label class="form-label">Additional Features</label>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <input type="checkbox" id="feature1" name="features" value="Performance Package" class="feature-checkbox">
+                        <label for="feature1" class="feature-label">Performance Package</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="feature2" name="features" value="Premium Sound System" class="feature-checkbox">
+                        <label for="feature2" class="feature-label">Premium Sound System</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="feature3" name="features" value="Carbon Fiber Accents" class="feature-checkbox">
+                        <label for="feature3" class="feature-label">Carbon Fiber Accents</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="feature4" name="features" value="Advanced Driver Assistance" class="feature-checkbox">
+                        <label for="feature4" class="feature-label">Advanced Driver Assistance</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="feature5" name="features" value="Sport Suspension" class="feature-checkbox">
+                        <label for="feature5" class="feature-label">Sport Suspension</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="feature6" name="features" value="Panoramic Roof" class="feature-checkbox">
+                        <label for="feature6" class="feature-label">Panoramic Roof</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section full-width">
+                <label for="specialRequests" class="form-label">Special Requests or Comments</label>
+                <textarea id="specialRequests" name="specialRequests" class="form-textarea" placeholder="Please let us know if you have any special requests..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Order</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-col">
+            <h4>Our Media</h4>
+            <div class="social-links">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <br>
+            <p class="copyright">&copy; 2025 Verstappen Motors. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation toggle functionality
+        const navbarToggle = document.querySelector('.navbar-toggle');
+        const navbarLinks = document.querySelector('.navbar-links');
+        
+        navbarToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.navbar-links a').forEach(link => {
+            link.addEventListener('click', () => navbarLinks.classList.remove('active'));
+        });
+        
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // Close navbar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navbarLinks.classList.contains('active') && 
+                !e.target.closest('.navbar-links') && 
+                !e.target.closest('.navbar-toggle')) {
+                navbarLinks.classList.remove('active');
+            }
+        });
+        function selectColor(inputId, colorName, element) {
+            document.getElementById(inputId).value = colorName;
+            const parent = element.parentElement;
+            const siblings = parent.querySelectorAll('.color-option');
+            siblings.forEach(sib => sib.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedFeatures = [];
+            document.querySelectorAll('input[name="features"]:checked').forEach(checkbox => {
+                selectedFeatures.push(checkbox.value);
+            });
+            const exteriorColor = document.getElementById('exteriorColor').value;
+            const interiorTrim = document.getElementById('interiorTrim').value;
+            if (!exteriorColor) {
+                alert('Please select an exterior color');
+                return;
+            }
+            if (!interiorTrim) {
+                alert('Please select an interior trim');
+                return;
+            }
+            alert('Thank you for your order! Our team will contact you shortly to confirm the details.');
+            this.reset();
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('exteriorColor').value = '';
+            document.getElementById('interiorTrim').value = '';
+        });
+    </script>
+</body>
+</html>
