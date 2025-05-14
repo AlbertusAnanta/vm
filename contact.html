@@ -186,6 +186,7 @@
         .contact-form {
             flex: 1;
             min-width: 300px;
+            width: 100%;
         }
 
         .section-title {
@@ -264,7 +265,7 @@
         }
         .button-container{
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
         }
         .submit-btn {
             background-color: var(--accent-color);
@@ -404,6 +405,7 @@
 
             .contact-section {
                 flex-direction: column;
+                
             }
 
             .contact-info {
@@ -524,6 +526,7 @@
                     <textarea id="message" class="form-control" required></textarea>
                 </div>
                 <div class="button-container">
+                    <button type="reset" class="submit-btn">Reset</button>
                     <button type="submit" class="submit-btn">Send Message</button>
                 </div>
                 
@@ -587,6 +590,9 @@
             alert('Thank you for your message! We will get back to you shortly.');
             this.reset();
         });
+        function reset(){
+            this.reset();
+        }
     </script>
 </body>
 </html>
